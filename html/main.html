@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="css/index.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <link href="../css/main.css"rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="body-container">
+<div id="left-table" >
+    <div v-for="item in items" class="left-table-div" v-on:click="selectItem($event)" v-bind:index="item.index" :level="item.level">
+        <img src="../img/icon_right.png" :style="{width: '20px' , height: '20px',marginTop: '10px',display:item.dis}"/>
+        <a :style="{marginTop:'10px',position: absolute,marginLeft:10+item.level*20+'px'}">{{item.text}}</a>
+    </div>
+</div>
+
+<div id="right-div">
+    {{msg}}
+</div>
+
+    <div id="bottom-div"></div>
+
+</div>
+
+
+<div id="menu">
+    <div class="menu" onmouseenter="selecting(event)" index = "0">新建文件夹</div>
+    <div class="menu" onmouseenter="selecting(event)" index = "1">新建文件</div>
+    <div class="menu" onmouseenter="selecting(event)" index = "2">功能1</div>
+    <div class="menu" onmouseenter="selecting(event)" index = "3">功能1</div>
+    <div class="menu" onmouseenter="selecting(event)" index = "4">功能1</div>
+</div>
+<script src="../js/main.js"></script>
+</body>
+</html>

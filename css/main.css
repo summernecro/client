@@ -1,0 +1,50 @@
+html,body{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    width: 100%;
+    height: 100%;
+
+}
+#left-table{
+    position: absolute;
+    width: 250px;
+    top: 0px;
+    bottom: 50px;
+    overflow: paged-y;
+    overflow-x:hidden;
+}
+.left-table-div{
+    padding-left: 10px;
+    height: 40px;
+    text-align: left;
+    background: darkgrey;
+    border-bottom: 2px solid white;
+}
+#right-div{
+    position: absolute;
+    right: 0;
+    bottom: 50px;
+    top: 0;
+    background-color: white;
+    left: 250px;
+}
+#body-container{
+    height: 100%;
+}
+#bottom-div{
+    position: absolute;
+    bottom: 0px;
+    height: 50px;
+    width: 100%;
+    background: black;
+}
+#menu{
+    background: white;
+    position: absolute;
+    width: 0px;
+    overflow: hidden;
+    left: 100px;
+    top: 100px;
+    box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
+}
