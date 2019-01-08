@@ -113,7 +113,7 @@ function selecting(e) {
 //新建节点
 function newFile(pid,name){
     $.ajax({
-        url:'http://222.186.36.75:9999/note/note/insert',
+        url:'http://222.186.36.75:8888/note/note/insert',
         type:'post',
         dataType:'json',
         data:{data:'{pid:'+pid+',category:\'0\',name:'+name+'}'},
@@ -136,7 +136,7 @@ function newFile(pid,name){
 //删除节点
 function dlt(id){
     $.ajax({
-        url:'http://222.186.36.75:9999/note/note/delete',
+        url:'http://222.186.36.75:8888/note/note/delete',
         type:'post',
         dataType:'json',
         data:{data:id+''},
@@ -182,7 +182,7 @@ function saveText(e){
     d.id= treeNodes.id
     d.text = text;
     $.ajax({
-        url:'http://222.186.36.75:9999/note/note/updateTextById',
+        url:'http://222.186.36.75:8888/note/note/updateTextById',
         type:'post',
         dataType:'json',
         data:{data:JSON.stringify(d)},
@@ -212,7 +212,7 @@ var a = [];
 
 $(document).ready(function(){
     $.ajax({
-        url:'http://222.186.36.75:9999/note/note/getAllNotes',
+        url:'http://222.186.36.75:8888/note/note/getAllNotes',
         type:'get',
         dataType:'json',
         success:function (data) {

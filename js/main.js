@@ -32,7 +32,7 @@ menua = new Vue({
         newFolder:function (e,x) {
             document.getElementById("menu").style.width = '0px';
             $.ajax({
-                url:'http://222.186.36.75:9999/note/note/insert',
+                url:'http://222.186.36.75:8888/note/note/insert',
                 type:'post',
                 dataType:'json',
                 data:{data:'{pid:'+x+',category:\'0\'}'},
@@ -112,7 +112,7 @@ var noteid =0;
 //从接口获取列表数据
 function getNoteData(e) {
     $.ajax({
-        url:'http://222.186.36.75:9999/note/note/selectByPId',
+        url:'http://222.186.36.75:8888/note/note/selectByPId',
         type:'post',
         dataType:'json',
         data:{data:e},
@@ -135,7 +135,7 @@ function getNoteData(e) {
 
 function getParentData() {
     $.ajax({
-        url:'http://222.186.36.75:9999/note/note/selectParentById',
+        url:'http://222.186.36.75:8888/note/note/selectParentById',
         type:'post',
         dataType:'json',
         data:{data:noteid},
