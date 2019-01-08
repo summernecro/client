@@ -1,0 +1,50 @@
+html,body{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    width: 100%;
+    height: 100%;
+
+}
+.content_wrap{
+    background: white;
+    width: 200px;
+    height: 100%;
+    border-right: 1px solid #888888;
+}
+#right-menu{
+    background: white;
+    position: absolute;
+    width: 0px;
+    overflow: hidden;
+    left: 10px;
+    top: 10px;
+    box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
+    cursor: pointer;
+}
+#div-rename{
+    display: none;
+    position: absolute;
+    height: 40px;
+    left: 50%;
+    top:50%;
+}
+#div-rename input{
+}
+#mid-content{
+    position: absolute;
+    left: 200px;
+    top: 0px;
+    bottom: 0px;
+    word-wrap:break-word;
+    right: 0px;
+}
+#mid-content textarea{
+    width: 98%;
+    height: 95%;
+}
+#button-save{
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}

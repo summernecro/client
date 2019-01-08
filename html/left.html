@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <TITLE> ZTREE DEMO - Simple Data</TITLE>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="../css/left.css" type="text/css">
+    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.ztree.core.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</HEAD>
+
+<BODY>
+<div class="content_wrap">
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+</div>
+<div id="mid-content">
+    <textarea  id="input-mid-text"></textarea>
+    <button id="button-save" onclick="saveText(this)">保存</button>
+</div>
+
+
+<div id="right-menu">
+    <div class="right-menu" id="newfolder" onmouseenter="selecting(event)" index = "0">新建文件夹</div>
+    <div class="right-menu" id="newfile" onmouseenter="selecting(event)" index = "1">新建文件</div>
+    <div class="right-menu" id="delete" onmouseenter="selecting(event)" index = "2">删除</div>
+</div>
+<div id="div-rename">
+    <input id="input-rename" type="text"><input type="submit" value="确认" id="makesure-rename" onclick="addName(this)">
+</div>
+
+<script type="text/javascript" src="../js/left.js"></script>
+</BODY>
+</HTML>

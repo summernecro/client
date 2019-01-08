@@ -107,18 +107,6 @@ window.onclick = function (e) {
     }
 }
 
-function selecting(e) {
-    var parent =  e.target.parentNode;
-    for(i=0;i<parent.childElementCount;i++){
-        if(parent.children[i]==e.target){
-            parent.children[i].style.background = 'gray'
-        }else{
-            parent.children[i].style.background = 'white'
-        }
-
-    }
-}
-
 var noteid =0;
 
 //从接口获取列表数据
