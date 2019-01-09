@@ -10,51 +10,35 @@ var setting = {
     }
 };
 
-var zNodes =[
-    { id:1, pId:0, name:"父节点1 - 展开", open:true},
-    { id:11, pId:1, name:"父节点11 - 折叠"},
-    { id:111, pId:11, name:"叶子节点111",open:true},
-    { id:1111, pId:111, name:"叶子节点1111"},
-    { id:1112, pId:111, name:"叶子节点1112"},
-    { id:1113, pId:111, name:"叶子节点1113"},
-    { id:112, pId:11, name:"叶子节点112"},
-    { id:113, pId:11, name:"叶子节点113"},
-    { id:114, pId:11, name:"叶子节点114"},
-    { id:12, pId:1, name:"父节点12 - 折叠"},
-    { id:121, pId:12, name:"叶子节点121"},
-    { id:122, pId:12, name:"叶子节点122"},
-    { id:123, pId:12, name:"叶子节点123"},
-    { id:124, pId:12, name:"叶子节点124"},
-    { id:13, pId:1, name:"父节点13 - 没有子节点", isParent:true},
-    { id:2, pId:0, name:"父节点2 - 折叠"},
-    { id:21, pId:2, name:"父节点21 - 展开", open:true},
-    { id:211, pId:21, name:"叶子节点211"},
-    { id:212, pId:21, name:"叶子节点212"},
-    { id:213, pId:21, name:"叶子节点213"},
-    { id:214, pId:21, name:"叶子节点214"},
-    { id:22, pId:2, name:"父节点22 - 折叠"},
-    { id:221, pId:22, name:"叶子节点221"},
-    { id:222, pId:22, name:"叶子节点222"},
-    { id:223, pId:22, name:"叶子节点223"},
-    { id:224, pId:22, name:"叶子节点224"},
-    { id:23, pId:2, name:"父节点23 - 折叠"},
-    { id:231, pId:23, name:"叶子节点231"},
-    { id:232, pId:23, name:"叶子节点232"},
-    { id:233, pId:23, name:"叶子节点233"},
-    { id:234, pId:23, name:"叶子节点234"},
-    { id:3, pId:0, name:"父节点3 - 没有子节点", isParent:true}
-];
-
 function onRightClick(e,treeId,treeNode) {
    // reventDefault()
     treeNodes = treeNode;
+    document.getElementById('input-mid-text').style.display = 'none'
+    document.getElementById('button-save').style.display = 'none'
+    document.getElementById('html-link-content').style.display = 'none'
     hideOrShowTypeMenu(e,true,1,treeNode)
 
 }
 
 function onMouseDown(e, treeId, treeNode) {
     treeNodes = treeNode
-    document.getElementById("input-mid-text").value = treeNode.text;
+    switch (treeNode.category){
+        //文本
+        case '0':
+        case 0:
+            document.getElementById('input-mid-text').style.display = 'inline'
+            document.getElementById('button-save').style.display = 'inline'
+            document.getElementById('html-link-content').style.display = 'none'
+            document.getElementById("input-mid-text").value = treeNode.text;
+            break
+        case '5':
+        case 5:
+            document.getElementById('input-mid-text').style.display = 'none'
+            document.getElementById('button-save').style.display = 'none'
+            document.getElementById('html-link-content').style.display = 'inline'
+            document.getElementById("formContenFrame").src = treeNode.text;
+            break
+    }
 }
 
 var treeNodes//当前被右键的节点
@@ -69,31 +53,45 @@ function hideOrShowTypeMenu(e,a,i,treeNode) {
     newfolder = menu.children[0];
     newfile = menu.children[1];
     dlte = menu.children[2];
-    newfolder.style.display = 'inline'
-    newfolder.style.display = 'inline'
-    newfolder.style.display = 'inline'
+    rename = menu.children[3]
+    link = menu.children[4]
+
+    // newfolder.style.display = 'inline'
+    // newfile.style.display = 'inline'
+    // dlte.style.display = 'inline'
+    // rename.style.display = 'inline'
+    // link.style.display = 'inline'
+
     newfolder.setAttribute('data',treeNode.id)
     newfile.setAttribute('data',treeNode.id)
     dlte.setAttribute('data',treeNode.id)
+    rename.setAttribute('data',treeNode.id)
+    link.setAttribute('data',treeNode.id)
 
     switch (i){
         //右键根文件夹
         case 0:
-            newfolder.style.display = 'inline'
-            newfolder.style.display = 'inline'
-            newfolder.style.display = 'none'
+            newfolder.style.display = 'block'
+            newfile.style.display = 'block'
+            dlte.style.display = 'none'
+            rename.style.display = 'block'
+            link.style.display = 'block'
             break
         //右键文件夹
         case 1:
-            newfolder.style.display = 'inline'
-            newfolder.style.display = 'inline'
-            newfolder.style.display = 'inline'
+            newfolder.style.display = 'block'
+            newfile.style.display = 'block'
+            dlte.style.display = 'block'
+            rename.style.display = 'block'
+            link.style.display = 'block'
             break
         case 2:
             //右键文件
             newfolder.style.display = 'none'
-            newfolder.style.display = 'none'
-            newfolder.style.display = 'inline'
+            newfile.style.display = 'none'
+            dlte.style.display = 'block'
+            rename.style.display = 'block'
+            link.style.display = 'block'
             break
     }
 
@@ -112,20 +110,55 @@ function selecting(e) {
 
 //新建节点
 function newFile(pid,name){
+    var d = new Object()
+    d.pid = pid;
+    d.category = '0'
+    d.name = name
     $.ajax({
-        url:'http://222.186.36.75:8888/note/note/insert',
+        url:window.myurl+'/note/insert',
         type:'post',
         dataType:'json',
-        data:{data:'{pid:'+pid+',category:\'0\',name:'+name+'}'},
+        data:{data:JSON.stringify(d)},
         success:function (data) {
             var json = JSON.parse(data.data)
             var news;
                 b = new Object()
                 b.id = json.id;
                 b.pId =  json.pid;
-                b.name = b.id+json.name;
-                b.text = json.text;
+                b.name = b.id+'-'+json.name;
+                b.category = '0'
+                b.text = '';
                 //a.push(b)
+            $.fn.zTree.getZTreeObj("treeDemo").addNodes(treeNodes,-1,b)
+        },
+        error:function(e){
+            alert(e)
+        }
+    });
+}
+
+//新建节点
+function newLinkHtml(pid,name,link){
+    var d = new Object()
+    d.pid = pid;
+    d.category = '5'
+    d.name = name
+    d.text = link
+    $.ajax({
+        url:window.myurl+'/note/insert',
+        type:'post',
+        dataType:'json',
+        data:{data:JSON.stringify(d)},
+        success:function (data) {
+            var json = JSON.parse(data.data)
+            var news;
+            b = new Object()
+            b.id = json.id;
+            b.pId =  json.pid;
+            b.name = b.id+'-'+json.name;
+            b.category = '5'
+            b.text = link;
+            //a.push(b)
             $.fn.zTree.getZTreeObj("treeDemo").addNodes(treeNodes,-1,b)
         },
         error:function(e){
@@ -136,7 +169,7 @@ function newFile(pid,name){
 //删除节点
 function dlt(id){
     $.ajax({
-        url:'http://222.186.36.75:8888/note/note/delete',
+        url:window.myurl+'/note/delete',
         type:'post',
         dataType:'json',
         data:{data:id+''},
@@ -149,40 +182,34 @@ function dlt(id){
     });
 }
 
-
-window.onclick = function (e) {
-    document.getElementById("right-menu").style.width = '0px';
-    var id = e.target.getAttribute('data')
-    if(e.target.className=='right-menu'){
-        switch (e.target.id){
-            case "newfolder":
-                document.getElementById("div-rename").style.display = 'inline'
-                document.getElementById("makesure-rename").setAttribute('data',id)
-                break;
-            case "newfile":
-                break
-            case "delete":
-                dlt(id)
-                break
-        }
-    }
-}
-
 //录入文件名称
 function addName(e){
     var v = document.getElementById("input-rename").value;
     var id = e.getAttribute('data')
-    newFile(id,v)
+    var type = e.getAttribute('data2')
+    switch (type){
+        case 'newfolder':
+            newFile(id,v)
+            break
+        case 'rename':
+            reName(id,v)
+            break
+        case 'linkhtml':
+            var link = document.getElementById("input-link-html").value;
+            newLinkHtml(id,v,link)
+            break
+    }
     document.getElementById("div-rename").style.display='none'
 }
 
+//保存笔记
 function saveText(e){
     var text = document.getElementById("input-mid-text").value;
     d = new Object();
     d.id= treeNodes.id
     d.text = text;
     $.ajax({
-        url:'http://222.186.36.75:8888/note/note/updateTextById',
+        url:window.myurl+'/note/updateTextById',
         type:'post',
         dataType:'json',
         data:{data:JSON.stringify(d)},
@@ -196,41 +223,87 @@ function saveText(e){
     });
 }
 
+//重命名
+function reName(id,name){
+    d = new Object();
+    d.id= id
+    d.name =name
 
-
-//右键菜单
-document.oncontextmenu=function (e) {
-    if(e.target.className == 'content_wrap'){
-        //取消默认的右键菜单
-        e.preventDefault()
-    }
-}
-
-
-//总数据
-var a = [];
-
-$(document).ready(function(){
     $.ajax({
-        url:'http://222.186.36.75:8888/note/note/getAllNotes',
-        type:'get',
+        url:window.myurl+'/note/reName',
+        type:'post',
         dataType:'json',
+        data:{data:JSON.stringify(d)},
         success:function (data) {
-            var json = JSON.parse(data.data)
-            var news;
-            for(i=0;i<json.length;i++){
-                json[i].category;
-                b = new Object()
-                b.id = json[i].id;
-                b.pId =  json[i].pid;
-                b.name = b.id+json[i].name;
-                b.text = json[i].text==undefined?'':json[i].text;
-                a.push(b)
-            }
-            $.fn.zTree.init($("#treeDemo"), setting, a);
+            treeNodes.name = id+'-'+name;
+            //$.fn.zTree.getZTreeObj("treeDemo").reAsyncChildNodes(treeNodes,'refresh',false)
+            $.fn.zTree.getZTreeObj("treeDemo").updateNode(treeNodes)
         },
         error:function(e){
             alert(e)
         }
     });
+}
+
+//界面准备完毕
+$(document).ready(function(){
+    $.ajax({
+        url:window.myurl+'/note/getAllNotes',
+        type:'get',
+        dataType:'json',
+        success:function (data) {
+            var json = JSON.parse(data.data)
+            for(i=0;i<json.length;i++){
+                b = new Object()
+                b.id = json[i].id;
+                b.pId =  json[i].pid;
+                b.name = b.id+'-'+json[i].name;
+                b.category = json[i].category
+                b.text = json[i].text==undefined?'':json[i].text;
+                allnotedata.push(b)
+            }
+            $.fn.zTree.init($("#treeDemo"), setting, allnotedata);
+        },
+        error:function(e){
+            alert(e)
+        }
+    });
+
+    //右键菜单
+    document.oncontextmenu=function (e) {
+        if(e.target.className == 'content_wrap'){
+            //点击左边节点目录 取消默认的右键菜单
+            e.preventDefault()
+        }
+    }
+
+    window.onclick = function (e) {
+        document.getElementById("right-menu").style.width = '0px';
+        var id = e.target.getAttribute('data')
+        if(e.target.className=='right-menu'){
+            switch (e.target.id){
+                case "newfolder":
+                    document.getElementById("div-rename").style.display = 'inline'
+                    document.getElementById("makesure-rename").setAttribute('data',id)
+                    document.getElementById("makesure-rename").setAttribute('data2','newfolder')
+                    break;
+                case "newfile":
+                    break
+                case "delete":
+                    dlt(id)
+                    break
+                case "rename":
+                    document.getElementById("div-rename").style.display = 'inline'
+                    document.getElementById("makesure-rename").setAttribute('data',id)
+                    document.getElementById("makesure-rename").setAttribute('data2','rename')
+                    break
+                case "linkhtml":
+                    document.getElementById("div-rename").style.display = 'inline'
+                    document.getElementById("input-link-html").style.display = 'inline'
+                    document.getElementById("makesure-rename").setAttribute('data',id)
+                    document.getElementById("makesure-rename").setAttribute('data2','linkhtml')
+                    break
+            }
+        }
+    }
 });

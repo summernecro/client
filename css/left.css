@@ -22,6 +22,9 @@ html,body{
     box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
     cursor: pointer;
 }
+.right-menu{
+    width: 125px;
+}
 #div-rename{
     display: none;
     position: absolute;
@@ -47,4 +50,16 @@ html,body{
     position: absolute;
     right: 20px;
     bottom: 10px;
+}
+#html-link-content{
+    width: 98%;
+    height: 98%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+#input-link-html{
+    display: none;
 }

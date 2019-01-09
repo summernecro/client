@@ -31,7 +31,7 @@ function createWindow() {
     //win.loadURL('E:\\project\\client\\client\\main.html');
     rootpath = __dirname.substring(0,__dirname.length-'/js'.length)
 
-     win.loadURL(rootpath+'/html/main.html');
+     win.loadURL(rootpath+'/html/left.html');
 }
 
 // Electron 会在初始化后并准备
